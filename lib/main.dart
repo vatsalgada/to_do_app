@@ -6,10 +6,10 @@ import 'package:to_do_app/home.dart';
 import 'package:to_do_app/todo_bloc/todo_bloc.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized;
+  WidgetsFlutterBinding.ensureInitialized();
   HydratedBloc.storage = await HydratedStorage.build(
-      storageDirectory: await getTemporaryDirectory());
-
+    storageDirectory: await getTemporaryDirectory(),
+  );
   runApp(const MainApp());
 }
 
@@ -32,7 +32,7 @@ class MainApp extends StatelessWidget {
       )),
       home: BlocProvider<TodoBloc>(
         create: (context) => TodoBloc()..add(TodoStarted()),
-        child: HomeScreen(),
+        child: const HomeScreen(),
       ),
     );
   }

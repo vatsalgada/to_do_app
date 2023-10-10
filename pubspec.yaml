@@ -16,6 +16,7 @@ dependencies:
   equatable:
   meta:
   bloc:
+  cupertino_icons:
 
 
 dev_dependencies:
