@@ -238,10 +238,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           child: ListTile(
                             title: Text(
                               undoneItems[i].title.toString(),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  decoration: TextDecoration.lineThrough),
                             ),
-                            subtitle: Text(undoneItems[i].subtitle.toString()),
+                            subtitle: Text(
+                              undoneItems[i].subtitle.toString(),
+                              style: const TextStyle(
+                                  decoration: TextDecoration.lineThrough),
+                            ),
                             trailing: Checkbox(
                                 value: undoneItems[i].isDone,
                                 activeColor: Colors.blueAccent,
