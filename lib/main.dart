@@ -22,14 +22,16 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'To-Do App',
       theme: ThemeData(
-          colorScheme: const ColorScheme.light(
-        background: Colors.white,
-        onBackground: Colors.black,
-        primary: Colors.yellowAccent,
-        onPrimary: Colors.black,
-        secondary: Colors.lightGreen,
-        onSecondary: Colors.white,
-      )),
+        primarySwatch: Colors.yellow,
+        colorScheme: const ColorScheme.light(
+          background: Colors.white,
+          onBackground: Colors.black,
+          primary: Colors.yellowAccent,
+          onPrimary: Colors.black,
+          secondary: Colors.lightGreen,
+          onSecondary: Colors.white,
+        ),
+      ),
       home: BlocProvider<TodoBloc>(
         create: (context) => TodoBloc()..add(TodoStarted()),
         child: const HomeScreen(),
