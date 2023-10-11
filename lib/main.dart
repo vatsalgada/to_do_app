@@ -22,13 +22,14 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'To-Do App',
       theme: ThemeData(
-        primarySwatch: Colors.yellow,
+        useMaterial3: true,
+        //primarySwatch: Colors.yellowAccent,
         colorScheme: const ColorScheme.light(
           background: Colors.white,
           onBackground: Colors.black,
           primary: Colors.yellowAccent,
           onPrimary: Colors.black,
-          secondary: Colors.lightGreen,
+          secondary: Color.fromARGB(255, 81, 138, 16),
           onSecondary: Colors.white,
         ),
       ),

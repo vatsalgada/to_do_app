@@ -33,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: const Text('Add task'),
         onPressed: () {
           showDialog(
               context: context,
@@ -70,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         controller: controller2,
                         cursorColor: Theme.of(context).colorScheme.secondary,
                         decoration: InputDecoration(
-                            hintText: 'Task title..',
+                            hintText: 'Task details..',
                             focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(10),
                                 borderSide: BorderSide(
@@ -90,13 +91,23 @@ class _HomeScreenState extends State<HomeScreen> {
                       padding: const EdgeInsets.all(10),
                       child: TextButton(
                         onPressed: () {
-                          addTodo(
-                            Todo(
-                              id: uuid.v1(),
-                              title: controller1.text,
-                              subtitle: controller2.text,
-                            ),
-                          );
+                          if (controller1.text.isNotEmpty) {
+                            addTodo(
+                              Todo(
+                                id: uuid.v1(),
+                                title: controller1.text,
+                                subtitle: controller2.text,
+                              ),
+                            );
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('Empty title...'),
+                                duration:
+                                    Duration(seconds: 2, milliseconds: 500),
+                              ),
+                            );
+                          }
                           controller1.text = '';
                           controller2.text = '';
                           Navigator.pop(context);
@@ -106,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               fontWeight: FontWeight.bold, fontSize: 18),
                           shape: RoundedRectangleBorder(
                             side: BorderSide(
-                              color: Theme.of(context).colorScheme.secondary,
+                              color: Theme.of(context).colorScheme.onBackground,
                             ),
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -129,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
               });
         },
         backgroundColor: Theme.of(context).primaryColor,
-        child: const Icon(
+        icon: const Icon(
           CupertinoIcons.add,
           color: Colors.black,
         ),
@@ -186,12 +197,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           child: ListTile(
                             title: Text(
-                              state.todos[i].title.toString(),
+                              doneItems[i].title.toString(),
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             subtitle: Text(doneItems[i].subtitle.toString()),
-                            trailing: Checkbox(
+                            leading: Checkbox(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 value: doneItems[i].isDone,
                                 activeColor: Colors.blueAccent,
                                 onChanged: (value) {
@@ -208,7 +222,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       );
                     },
                   ),
-                  Text("Completed Tasks"),
+                  if (undoneItems.isEmpty) ...[
+                    const Text('No complete tasks')
+                  ] else ...[
+                    const Text("Completed Tasks"),
+                  ],
                   ListView.builder(
                     shrinkWrap: true,
                     itemCount: undoneItems.length,
@@ -247,9 +265,12 @@ class _HomeScreenState extends State<HomeScreen> {
                               style: const TextStyle(
                                   decoration: TextDecoration.lineThrough),
                             ),
-                            trailing: Checkbox(
+                            leading: Checkbox(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
                                 value: undoneItems[i].isDone,
-                                activeColor: Colors.blueAccent,
+                                activeColor: Color.fromARGB(255, 151, 169, 169),
                                 onChanged: (value) {
                                   final tempid = undoneItems[i].id;
                                   alterTodo(tempid);
